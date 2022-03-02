@@ -13,11 +13,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/task")
+@RequiredArgsConstructor
 public class TaskController {
+
+    private final DbService service;
+    private final TaskMapper taskMapper;
 
     @RequestMapping(method = RequestMethod.GET, value = "getTasks")
     public List<TaskDto> getTasks() {
-        return new ArrayList<>();
+        List<Task> tasks = service.getAllTasks();
+        return taskMapper.mapToTaskDtoList(tasks);
     }
 
     @RequestMapping
@@ -37,6 +42,8 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.POST, value = "createTask")
     public void createTask(TaskDto taskDto) {
+
+    }
 
     }
 }
