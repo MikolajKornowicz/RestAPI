@@ -5,12 +5,9 @@ import com.crud.tasks.domain.Task;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
-
 
 import java.util.List;
 
@@ -35,7 +32,7 @@ public class TaskController {
 
     @DeleteMapping(value = "{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) throws TaskNotFoundException {
-        service.deleteTask(taskId);
+        service.deleteTaskById(taskId);
         return ResponseEntity.ok().build();
     }
 
@@ -46,7 +43,7 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.mapToTaskDto(savedTask));
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, value = "createTask")
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createTask(@RequestBody TaskDto taskDto) {
         Task task = taskMapper.mapToTask(taskDto);
         service.saveTask(task);
