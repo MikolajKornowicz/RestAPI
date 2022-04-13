@@ -6,4 +6,6 @@ import lombok.Data;
 public class AttachmentsByType {
 
     private Trello trello;
+
+    public AttachmentsByType(){}
 }

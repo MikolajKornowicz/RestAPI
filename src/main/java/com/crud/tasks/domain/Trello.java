@@ -8,4 +8,6 @@ public class Trello {
     private int board;
     private int card;
 
+    public Trello(){}
+
 }

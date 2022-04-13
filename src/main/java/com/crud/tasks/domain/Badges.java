@@ -7,4 +7,7 @@ public class Badges {
 
     private int votes;
     private AttachmentsByType attachmentsByType;
+
+    public Badges() {
+    }
 }
