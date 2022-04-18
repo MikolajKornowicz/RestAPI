@@ -17,7 +17,6 @@ import java.util.Objects;
 public class SimpleEmailService {
 
     private JavaMailSender javaMailSender;
-    private Mail mail;
 
     public void send(final Mail mail) {
         log.info("Starting email preparation...");
@@ -32,12 +31,18 @@ public class SimpleEmailService {
 
     private SimpleMailMessage createMailMessage(final Mail mail) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        if(mail.getToCC().isPresent()){
         mailMessage.setTo(mail.getSendTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-        if(mail.getToCC().length()>0){
-            mailMessage.setCc(String.valueOf(mail.getToCC()));
-        }
+        mailMessage.setCc(mail.getToCC().toString());
+        return mailMessage;
+
+        }   else{
+            mailMessage.setTo(mail.getSendTo());
+            mailMessage.setSubject(mail.getSubject());
+            mailMessage.setText(mail.getMessage());
             return mailMessage;
+        }
     }
 }

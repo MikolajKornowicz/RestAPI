@@ -13,7 +13,7 @@ public class Mail {
     private final String sendTo;
     private final String subject;
     private final String message;
-    private String toCC;
+    private Optional<String> toCC;
 
 
 }

@@ -9,6 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
@@ -52,18 +54,18 @@ class SimpleEmailServiceTest {
                 .sendTo("test@mail.com")
                 .subject("Test subject")
                 .message("Test message")
-                .toCC("testCC@mail.com")
+                .toCC(Optional.of("testCC@mail.com"))
                 .build();
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getSendTo());
         mailMessage.setSubject(mail.getSubject());
-        mailMessage.setCc(mail.getToCC());
+        mailMessage.setCc(mail.getToCC().toString());
         mailMessage.setText(mail.getMessage());
 
         //when
         simpleEmailService.send(mail);
-        String cc = mail.getToCC();
+        String cc = mail.getToCC().toString();
 
         //then
         assertEquals("testCC@mail.com", cc);
