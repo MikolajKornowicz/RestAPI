@@ -8,9 +8,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.Locale;
-import java.util.Objects;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -30,15 +27,18 @@ public class SimpleEmailService {
     }
 
     private SimpleMailMessage createMailMessage(final Mail mail) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        if(mail.getToCC().isPresent()){
-        mailMessage.setTo(mail.getSendTo());
-        mailMessage.setSubject(mail.getSubject());
-        mailMessage.setText(mail.getMessage());
-        mailMessage.setCc(mail.getToCC().toString());
-        return mailMessage;
 
-        }   else{
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        if (mail.getToCC() != null) {
+            mailMessage.setTo(mail.getSendTo());
+            mailMessage.setSubject(mail.getSubject());
+            mailMessage.setText(mail.getMessage());
+            mailMessage.setCc(mail.getToCC());
+            return mailMessage;
+
+        }
+        else {
             mailMessage.setTo(mail.getSendTo());
             mailMessage.setSubject(mail.getSubject());
             mailMessage.setText(mail.getMessage());
@@ -46,3 +46,4 @@ public class SimpleEmailService {
         }
     }
 }
+

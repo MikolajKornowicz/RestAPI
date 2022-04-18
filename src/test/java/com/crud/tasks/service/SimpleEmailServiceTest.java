@@ -54,18 +54,18 @@ class SimpleEmailServiceTest {
                 .sendTo("test@mail.com")
                 .subject("Test subject")
                 .message("Test message")
-                .toCC(Optional.of("testCC@mail.com"))
+                .toCC("testCC@mail.com")
                 .build();
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getSendTo());
         mailMessage.setSubject(mail.getSubject());
-        mailMessage.setCc(mail.getToCC().toString());
+        mailMessage.setCc(mail.getToCC());
         mailMessage.setText(mail.getMessage());
 
         //when
         simpleEmailService.send(mail);
-        String cc = mail.getToCC().toString();
+        String cc = mail.getToCC();
 
         //then
         assertEquals("testCC@mail.com", cc);
