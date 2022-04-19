@@ -19,5 +19,10 @@
       "name": "trello.app.username",
       "type": "java.lang.String",
       "description": "Contains a Trello username."
+    },
+    {
+      "name": "admin.mail",
+      "type": "java.lang.String",
+      "description": "Contains admin email address."
     }
   ] }
