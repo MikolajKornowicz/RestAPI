@@ -1,15 +1,15 @@
 package com.crud.tasks.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Getter;
 
-@Data
 @AllArgsConstructor
-public class TrelloCardDto {
+@Getter
+public class TrelloCard {
 
     private String name;
     private String description;
     private String pos;
     private String listId;
+
 }
