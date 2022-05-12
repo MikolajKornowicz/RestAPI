@@ -25,6 +25,7 @@ class EmailSchedulerTestsuite {
     private SimpleEmailService simpleEmailService;
     @Mock
     private TaskRepository taskRepository;
+
     @Mock
     private AdminConfig adminConfig;
 

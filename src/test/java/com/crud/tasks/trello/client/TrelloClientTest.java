@@ -1,13 +1,14 @@
 package com.crud.tasks.trello.client;
 
 import com.crud.tasks.config.TrelloConfig;
-import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TrelloClientTest {
@@ -67,5 +68,22 @@ class TrelloClientTest {
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
         // Then
         assertEquals(0, fetchedTrelloBoards.size());
+    }
+
+    @Test
+    void testCreateNewCard () throws URISyntaxException {
+        //given
+        when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
+        when(trelloConfig.getTrelloAppKey()).thenReturn("test");
+        when(trelloConfig.getTrelloToken()).thenReturn("test");
+        URI uri = new URI("http://test.com/cards?key=test&token=test&name=test&desc=test&pos=test&idList=test");
+        TrelloCardDto trelloCardDto = new TrelloCardDto("test", "test", "test", "test");
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto("test", "test", "test", new Badges());
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
+        //when
+        createdTrelloCardDto = trelloClient.createNewCard(trelloCardDto);
+        //then
+        assertEquals("test", createdTrelloCardDto.getName());
+
     }
 }

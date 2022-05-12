@@ -1,9 +1,6 @@
 package com.crud.tasks.trello.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.validator.TrelloValidator;
@@ -16,8 +13,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TrelloFacadeTest {
@@ -101,5 +100,23 @@ class TrelloFacadeTest {
                 assertThat(trelloListDto.isClosed()).isFalse();
             });
         });
+    }
+
+    @Test
+    void testCreateTrelloCard () {
+        //given
+        TrelloCardDto trelloCardDto = new TrelloCardDto("test", "test", "test", "test");
+        TrelloCardDto mappedTrelloCardDto = new TrelloCardDto("test", "test", "test", "test");
+        TrelloCard trelloCard =  new TrelloCard("test","test","test","test");
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto();
+        when(trelloMapper.mapToCard(trelloCardDto)).thenReturn(trelloCard);
+        when(trelloMapper.mapToCardDto(trelloCard)).thenReturn(mappedTrelloCardDto);
+        when(trelloService.createTrelloCard(mappedTrelloCardDto)).thenReturn(createdTrelloCardDto);
+
+        //when
+        trelloFacade.createCard(trelloCardDto);
+        //then
+        verify(trelloService, times(1)).createTrelloCard(mappedTrelloCardDto);
+        verify(trelloValidator, times(1)).validateCard(trelloCard);
     }
 }

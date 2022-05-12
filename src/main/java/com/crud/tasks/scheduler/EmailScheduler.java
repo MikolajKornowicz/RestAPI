@@ -25,27 +25,13 @@ public class EmailScheduler {
     public void sendInformationEmail() {
         log.info("Preparing scheduled mail");
         long size = taskRepository.count();
-        if (size == 1) {
-            log.info("Singular form mail prepared");
-            simpleEmailService.send(
-                          new Mail(
-                                    adminConfig.getAdminMail(),
-                            SUBJECT,
-                            "Currently in database you got: " + size + " task",
-                            null
-                    )
-            );
-        } else {
-            log.info("Plural form mail prepared");
-            simpleEmailService.send(
-                    new Mail(
-                            adminConfig.getAdminMail(),
-                            SUBJECT,
-                            "Currently in database you got: " + size + " tasks",
-                            null
-                    )
-            );
-        }
-        log.info("Scheduled mail has been sent");
+        Mail mail =   new Mail(
+                adminConfig.getAdminMail(),
+                SUBJECT,
+                "Currently in database you got: " + size + " task" + ((size>1)?"s":""),
+                null
+        );
+            simpleEmailService.send(mail);
+        log.info("Scheduled mail has been sent with message: {}", mail.getMessage());
     }
 }
