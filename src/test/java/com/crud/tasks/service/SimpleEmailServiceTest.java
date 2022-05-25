@@ -7,12 +7,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
 
@@ -26,6 +29,7 @@ class SimpleEmailServiceTest {
 
     @Mock
     private JavaMailSender javaMailSender;
+
 
     @Test
     public void shouldSendEmail() {
@@ -45,8 +49,10 @@ class SimpleEmailServiceTest {
         simpleEmailService.send(mail);
 
         //then
-        verify(javaMailSender, times(1)).send(mailMessage);
+        verify(javaMailSender, times(1)).send(any(MimeMessagePreparator.class));
     }
+
+
 
     @Test
     public void shouldSendEmailToCC() {
@@ -70,5 +76,6 @@ class SimpleEmailServiceTest {
 
         //then
         assertEquals("testCC@mail.com", cc);
+        verify(javaMailSender, times(1)).send(any(MimeMessagePreparator.class));
     }
 }

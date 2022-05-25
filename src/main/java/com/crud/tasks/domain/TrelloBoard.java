@@ -2,11 +2,14 @@ package com.crud.tasks.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class TrelloBoard {
 
     private String id;

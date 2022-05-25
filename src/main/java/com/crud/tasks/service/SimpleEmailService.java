@@ -2,6 +2,7 @@ package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -10,6 +11,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+
+import javax.mail.internet.MimeMessage;
 
 @Slf4j
 @Service
