@@ -30,17 +30,6 @@ public class MailCreatorService {
         return tasks.size();
     }
 
-    private String messageContentGenerator() {
-        int amount = numberOfTasks();
-        if(amount == 1){
-            return "There is only 1 task in the database.";
-        } if (amount == 0){
-            return "There are no tasks in the database.";
-        } else {
-            return "There are " + amount + " tasks in the database.";
-        }
-    }
-
     public String buildTrelloCardEmail(String message) {
 
         List<String> functionality = new ArrayList<>();
@@ -68,7 +57,9 @@ public class MailCreatorService {
         context.setVariable("number_of_tasks", numberOfTasks());
         context.setVariable("button", "Visit the website");
         context.setVariable("tasks_url", "http://localhost:8888/crud");
-        context.setVariable("message_content", messageContentGenerator());
+        context.setVariable("if_one", false);
+        context.setVariable("message_content_single", "There is one new task");
+        context.setVariable("message_content_multiple", "There are" + numberOfTasks() + " tasks");
         context.setVariable("goodbye_message", "Thank you for using our services");
 
         return templateEngine.process("mail/number-of-tasks-mail", context);
