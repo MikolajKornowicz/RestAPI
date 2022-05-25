@@ -40,7 +40,7 @@ class TaskControllerTest {
         //when&then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/tasks/getTasks")
+                        .get("/v1/tasks")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(0)));
